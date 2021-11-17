@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MeteoStation"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="MeteoStation.Pages.AlarmPage"
+             NavigationPage.HasNavigationBar="False">
+    <StackLayout x:Name="stackLayout" Padding="30,10">
+        <Label            
+            Text="Установить будильник" HorizontalOptions="Center"  FontSize="Title" Padding="30,10,30,10" />
+        <Label 
+            x:Name="datePickerText"
+            Text="Установите дату" Margin="0,20,0,0" />
+        <DatePicker 
+            x:Name="datePicker"
+            Date="{x:Static sys:DateTime.Today}"
+            Style="{StaticResource Key=ValidInputStyle}"
+            Format="D"
+            DateSelected="DateSelectedHandler"/>
+        <Label
+            x:Name="timePickerText"
+            Text="Установите время" Margin="0,20,0,0" />
+        <TimePicker 
+            x:Name="timePicker"
+            Style="{StaticResource Key=ValidInputStyle}"
+            Format="T"
+            PropertyChanged="TimeChangedHandler"/>
+        <Label 
+            x:Name="sliderText"
+            Text="Уровень громкости: 5" Margin="0,30,0,0"
+            HorizontalOptions="Center"/>
+        <Slider x:Name="slider"
+            Minimum="0" 
+            Maximum="10"
+            ThumbColor ="DodgerBlue"
+            MinimumTrackColor="DodgerBlue"  
+            MaximumTrackColor="Gray"
+            Value="5" 
+            ValueChanged = "VolumeChangedHandler" />
+        <Label 
+            x:Name="switchHeader"
+            Text="Без повтора" Margin="0,5,0,0" 
+            HorizontalOptions="Center"/>
+        <Switch 
+            x:Name="switchControl"
+            IsToggled="false"
+            HorizontalOptions="Center" 
+            ThumbColor="DodgerBlue"
+            OnColor="LightSteelBlue"
+            Toggled= "SwitchHandler" />
+        <Button 
+            x:Name="saveButton" 
+            Text="Сохранить" 
+            Clicked="OnSaveButtonClicked"/>
+        <Label
+            x:Name="alarmSetText"
+            HorizontalTextAlignment="Center"
+            Margin="0,20,0,0" />
+    </StackLayout>
+</ContentPage>

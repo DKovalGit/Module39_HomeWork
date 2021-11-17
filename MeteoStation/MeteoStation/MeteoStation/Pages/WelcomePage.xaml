@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MeteoStation"
+             x:Class="MeteoStation.Pages.WelcomePage"
+             NavigationPage.HasNavigationBar="False">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Label Text="Welcome to WeatherApp"
+               FontSize="Title"
+               TextColor="{local:RgbExtension Red=153, Green=153, Blue=153}"
+               Padding="30,10,30,10"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"/>
+        <Button x:Name="weatherButton"
+                Margin="5"
+                Text="{x:Static local:Pages.WelcomePage.BUTTON_WEATHER_TEXT}"
+                TextTransform="None"
+                Clicked="GetWeather_Click"
+                CornerRadius="{local:ButtonViewExtension ButtonStyle=Default}"/>
+        <Button x:Name="alarmButton"
+                Margin="5"
+                Text="{x:Static local:Pages.WelcomePage.BUTTON_ALARM_TEXT}"
+                TextTransform="None"
+                Clicked="GetAlarm_Click"
+                CornerRadius="{local:ButtonViewExtension ButtonStyle=Default}"/>
+                <!-- TextTransform="None" - для использования lower case-->
+    </StackLayout>
+</ContentPage>
