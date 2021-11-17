@@ -47,10 +47,10 @@ namespace MeteoStation.Models
         {
             var tnow = DateTime.Now.ToString("HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
             var time = Time.ToString();
-            if (time.CompareTo(tnow) == 0 || time.CompareTo(tnow) > 0)
-               return true;
+            if (time.CompareTo(tnow) == 0 || time.CompareTo(tnow) > 0 || time.CompareTo(tnow) < 0 && Date.CompareTo(DateTime.Today) > 0)
+                return true;
             else
-               return false;
+                return false;
         }
         public bool IsDateValid()
         {

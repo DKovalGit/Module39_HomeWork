@@ -13,12 +13,22 @@ namespace MeteoStation.Pages
 {
     public partial class AlarmPage : ContentPage
     {
+
         private Alarm alarm;
         private View[] views;
+        public static TimeSpan GetTimeNow
+        {
+            get
+            {
+                return DateTime.Now.TimeOfDay;
+            }
+        }
         public AlarmPage()
         {
             InitializeComponent();
             alarm = new Alarm();
+            alarm.SetDate(datePicker.Date);
+            alarm.SetTime(timePicker.Time);
             views = new View[]
             {
                 datePicker,
@@ -30,6 +40,13 @@ namespace MeteoStation.Pages
         public void DateSelectedHandler(object sender, DateChangedEventArgs e)
         {
             alarm.SetDate(e.NewDate);
+            SetDateState();
+            SetTimeState();
+
+            //datePickerText.Text = "Запустится " + alarm.DateStr;
+        }
+        private void SetDateState()
+        {
             if (alarm.IsDateValid())
             {
                 VisualStateManager.GoToState(datePicker, "Valid");
@@ -38,23 +55,25 @@ namespace MeteoStation.Pages
             {
                 VisualStateManager.GoToState(datePicker, "Invalid");
             }
-
-            //datePickerText.Text = "Запустится " + alarm.DateStr;
         }
         public void TimeChangedHandler(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Time")
             {
                 alarm.SetTime(timePicker.Time);
+                SetTimeState();
+            }
+        }
 
-                if (alarm.IsTimeValid())
-                {
-                    VisualStateManager.GoToState(timePicker, "Valid");
-                }
-                else
-                {
-                    VisualStateManager.GoToState(timePicker, "Invalid");
-                }
+        private void SetTimeState()
+        {
+            if (alarm.IsTimeValid())
+            {
+                VisualStateManager.GoToState(timePicker, "Valid");
+            }
+            else
+            {
+                VisualStateManager.GoToState(timePicker, "Invalid");
             }
         }
         public void VolumeChangedHandler(object sender, ValueChangedEventArgs e)
@@ -78,14 +97,21 @@ namespace MeteoStation.Pages
         private void OnSaveButtonClicked(object sender, System.EventArgs e)
         {
 
-            if (alarm.IsDateSet && alarm.IsTimeSet)
+            if (!alarm.IsDateValid())
             {
+                VisualStateManager.GoToState(datePicker, "Invalid");
+                return;
+            }
+            if (!alarm.IsTimeValid())
+            {
+                VisualStateManager.GoToState(timePicker, "Invalid");
+                return;
+            }
 
-                alarmSetText.Text = "Будильник установлен на: " + alarm.DateStr + " в " + alarm.TimeStr;
-                foreach (var view in views)
-                {
-                    view.IsEnabled = false;
-                }
+            alarmSetText.Text = "Будильник установлен на: " + alarm.DateStr + " в " + alarm.TimeStr;
+            foreach (var view in views)
+            {
+                view.IsEnabled = false;
             }
         }
     }
